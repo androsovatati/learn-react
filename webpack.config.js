@@ -8,6 +8,11 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js"
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, "src"),
+    },
+  },
   module: {
     rules: [
       {
@@ -27,19 +32,12 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg/,
-        use: {
-          loader: "svg-url-loader",
-          options: {}
-        }
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(svg|png|jpg|gif)$/,
         use: [
           {
             loader: "url-loader",
             options: {
-              name: "[path][name].[ext]?hash=[hash:20]",
+              name: "[path][name].[ext]",
               limit: 8192
             }
           }
@@ -49,7 +47,7 @@ module.exports = {
         test: /\.(ttf|otf|eot|woff|woff2)$/,
         loader: "file-loader",
         options: {
-          name: "fonts/[name].[ext]"
+          name: "[path][name].[ext]"
         }
       }
     ]
