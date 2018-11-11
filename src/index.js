@@ -1,12 +1,8 @@
 import './styles/main.scss';
 import './react.js';
-import Logo from './components/Logo.js';
-import AuthForm from './components/AuthForm.js';
+import LoginPage from './components/LoginPage.js';
 
 ReactDOM.render(
-  <div className="login-page">
-    <Logo />
-    <AuthForm />
-  </div>,
+  <LoginPage />,
   document.getElementById("root")
 );
