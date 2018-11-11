@@ -1,10 +1,17 @@
 window.React = (function() {
+  class Component {
+    constructor(props) {
+      this.props = props;
+    }
+  }
+
   function isFunction(element) {
     return typeof element === "function";
   }
 
   function isClass(element) {
-    return /class[\s]/.test(element.toString());
+    return Component.isPrototypeOf(element);
+    // return /class[\s]/.test(element.toString());
   }
 
   function isString(element) {
@@ -50,12 +57,6 @@ window.React = (function() {
       });
 
       return domNode;
-    }
-  }
-
-  class Component {
-    constructor(props) {
-      this.props = props;
     }
   }
 
