@@ -146,6 +146,7 @@ class LoginForm extends React.Component {
             this.resetLoading();
             this.props.onSuccess(response);
         } catch (e) {
+            this.resetLoading();
             this.props.onError(e);
         }
     };
@@ -230,7 +231,7 @@ class App extends React.Component {
     };
 
     render() {
-        const form = this.state.user ? (
+        const form = this.state.isLoggedIn ? (
             <LogoutForm data={this.state.user} onLogout={this.onLogout} />
         ) : (
             <LoginForm
