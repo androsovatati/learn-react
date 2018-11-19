@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "babel": "npx babel app.jsx --plugins@babel/plugin-transform-react-jsx --out-file app.js --watch"
+    "babel": "npx babel app.jsx --plugins @babel/plugin-proposal-class-properties --plugins@babel/plugin-transform-react-jsx --out-file app.js --watch"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-transform-react-jsx": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0"
