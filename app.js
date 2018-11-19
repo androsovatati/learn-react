@@ -18,25 +18,115 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var isFalse = function isFalse(value) {
+  return value === 'false';
+};
+
+var Input = function Input(props) {
+  var opts = _objectSpread({}, props);
+
+  if (isFalse(opts.required)) {
+    delete opts.required;
+  }
+
+  return React.createElement("input", _extends({
+    className: "login-form__input"
+  }, opts));
+};
+
+var Button = function Button(props) {
+  return React.createElement("button", {
+    className: "login-form__button"
+  }, props.children);
+};
+
+var LoginPage = function LoginPage(props) {
+  return React.createElement("main", {
+    className: "login-page"
+  }, React.createElement("div", {
+    className: "login-page__logo"
+  }, React.createElement("img", {
+    className: "company-logo",
+    src: "images/w-mercury-development.svg",
+    alt: "logo"
+  })), props.children);
+};
+
+var LoginForm = function LoginForm(props) {
+  return React.createElement("form", {
+    className: "login-page__form login-form"
+  }, React.createElement("div", {
+    className: "login-form__title"
+  }, "Log in"), React.createElement(Input, {
+    className: "login-form__input",
+    name: "email",
+    type: "email",
+    placeholder: "E-Mail",
+    required: true
+  }), React.createElement(Input, {
+    className: "login-form__input",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+    required: true
+  }), React.createElement("div", {
+    className: "login-form__error"
+  }), React.createElement(Button, {
+    className: "login-form__button"
+  }, "Login"));
+};
+
+var LogoutForm = function LogoutForm(props) {
+  return React.createElement("form", {
+    className: "login-page__form logout-form"
+  }, React.createElement("img", {
+    className: "logout-form__avatar",
+    src: "",
+    alt: "avatar"
+  }), React.createElement("div", {
+    className: "logout-form__username"
+  }), React.createElement(Button, {
+    className: "logout-form__button"
+  }, "Logout"));
+};
+
 var App =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
+    var _this;
+
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(App).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+    _this.state = {
+      user: null
+    };
+    return _this;
   }
 
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return React.createElement("h1", null, "Hello World");
+      var form = this.isLoggedIn ? React.createElement(LogoutForm, null) : React.createElement(LoginForm, null);
+      return React.createElement(LoginPage, null, form);
+    }
+  }, {
+    key: "isLoggedIn",
+    get: function get() {
+      return !!this.state.user;
     }
   }]);
 
   return App;
 }(React.Component);
 
-ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
+ReactDOM.render(React.createElement(App, null), document.getElementById('root'));
