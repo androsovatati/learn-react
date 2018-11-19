@@ -91,13 +91,37 @@ const ErrorNotification = (props) => {
     return <div className="login-form__error">{props.errorMessage}</div>;
 };
 
+const FormLoader = ({ isLoading }) => {
+    if (!isLoading) {
+        return null;
+    }
+    return (
+        <div className="login-form__loader">
+            <div className="loader" />
+        </div>
+    );
+};
+
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'user@example.com',
-            password: 'mercdev',
+            isLoading: false,
+            email: '',
+            password: '',
         };
+    }
+
+    setLoading() {
+        this.setState({
+            isLoading: true,
+        });
+    }
+
+    resetLoading() {
+        this.setState({
+            isLoading: false,
+        });
     }
 
     onEmailChange = (e) => {
@@ -117,7 +141,9 @@ class LoginForm extends React.Component {
     onLoginClick = async (e) => {
         e.preventDefault();
         try {
+            this.setLoading();
             const response = await login(this.state);
+            this.resetLoading();
             this.props.onSuccess(response);
         } catch (e) {
             this.props.onError(e);
@@ -153,6 +179,7 @@ class LoginForm extends React.Component {
                 >
                     Login
                 </Button>
+                <FormLoader isLoading={this.state.isLoading}/>
             </form>
         );
     }
@@ -194,13 +221,13 @@ class App extends React.Component {
         this.setState({
             errorMessage: '',
         });
-    }
+    };
 
     onLogout = () => {
         this.setState({
             user: null,
         });
-    }
+    };
 
     render() {
         const form = this.state.user ? (

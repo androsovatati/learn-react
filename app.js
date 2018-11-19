@@ -173,6 +173,20 @@ var ErrorNotification = function ErrorNotification(props) {
   }, props.errorMessage);
 };
 
+var FormLoader = function FormLoader(_ref3) {
+  var isLoading = _ref3.isLoading;
+
+  if (!isLoading) {
+    return null;
+  }
+
+  return React.createElement("div", {
+    className: "login-form__loader"
+  }, React.createElement("div", {
+    className: "loader"
+  }));
+};
+
 var LoginForm =
 /*#__PURE__*/
 function (_React$Component) {
@@ -204,7 +218,7 @@ function (_React$Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onLoginClick",
     /*#__PURE__*/
     function () {
-      var _ref3 = _asyncToGenerator(
+      var _ref4 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(e) {
         var response;
@@ -214,44 +228,64 @@ function (_React$Component) {
               case 0:
                 e.preventDefault();
                 _context2.prev = 1;
-                _context2.next = 4;
+
+                _this.setLoading();
+
+                _context2.next = 5;
                 return login(_this.state);
 
-              case 4:
+              case 5:
                 response = _context2.sent;
+
+                _this.resetLoading();
 
                 _this.props.onSuccess(response);
 
-                _context2.next = 11;
+                _context2.next = 13;
                 break;
 
-              case 8:
-                _context2.prev = 8;
+              case 10:
+                _context2.prev = 10;
                 _context2.t0 = _context2["catch"](1);
 
                 _this.props.onError(_context2.t0);
 
-              case 11:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 8]]);
+        }, _callee2, this, [[1, 10]]);
       }));
 
       return function (_x2) {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     }());
 
     _this.state = {
-      email: 'user@example.com',
-      password: 'mercdev'
+      isLoading: false,
+      email: '',
+      password: ''
     };
     return _this;
   }
 
   _createClass(LoginForm, [{
+    key: "setLoading",
+    value: function setLoading() {
+      this.setState({
+        isLoading: true
+      });
+    }
+  }, {
+    key: "resetLoading",
+    value: function resetLoading() {
+      this.setState({
+        isLoading: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return React.createElement("form", {
@@ -279,16 +313,18 @@ function (_React$Component) {
       }), React.createElement(Button, {
         className: "login-form__button",
         onClick: this.onLoginClick
-      }, "Login"));
+      }, "Login"), React.createElement(FormLoader, {
+        isLoading: this.state.isLoading
+      }));
     }
   }]);
 
   return LoginForm;
 }(React.Component);
 
-var LogoutForm = function LogoutForm(_ref4) {
-  var data = _ref4.data,
-      onLogout = _ref4.onLogout;
+var LogoutForm = function LogoutForm(_ref5) {
+  var data = _ref5.data,
+      onLogout = _ref5.onLogout;
   return React.createElement("div", {
     className: "login-page__form logout-form"
   }, React.createElement("img", {
