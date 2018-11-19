@@ -124,6 +124,12 @@ class LoginForm extends React.Component {
         });
     }
 
+    resetPassword() {
+        this.setState({
+            password: '',
+        });
+    }
+
     onEmailChange = (e) => {
         this.props.resetError();
         this.setState({
@@ -139,6 +145,9 @@ class LoginForm extends React.Component {
     };
 
     onLoginClick = async (e) => {
+        if (!this.state.email || !this.state.password) {
+            return;
+        }
         e.preventDefault();
         try {
             this.setLoading();
@@ -147,6 +156,7 @@ class LoginForm extends React.Component {
             this.props.onSuccess(response);
         } catch (e) {
             this.resetLoading();
+            this.resetPassword();
             this.props.onError(e);
         }
     };
@@ -202,10 +212,6 @@ class App extends React.Component {
         this.state = { user: null };
     }
 
-    get isLoggedIn() {
-        return !!this.state.user;
-    }
-
     onSuccessLogin = (data) => {
         this.setState({
             user: { ...data },
@@ -231,7 +237,7 @@ class App extends React.Component {
     };
 
     render() {
-        const form = this.state.isLoggedIn ? (
+        const form = this.state.user ? (
             <LogoutForm data={this.state.user} onLogout={this.onLogout} />
         ) : (
             <LoginForm
