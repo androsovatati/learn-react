@@ -135,12 +135,12 @@ class LoginForm extends React.Component {
         try {
             this.setLoading();
             const response = await login(this.state);
-            this.resetLoading();
             this.props.onSuccess(response);
         } catch (e) {
-            this.resetLoading();
             this.resetPassword();
             this.props.onError(e);
+        } finally {
+            this.resetLoading();
         }
     };
 
