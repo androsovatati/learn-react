@@ -48,9 +48,7 @@ const login = async ({ email, password }) => {
     }
 };
 
-const Input = (props) => (
-    <input className="login-form__input" {...props}/>
-);
+const Input = (props) => <input className="login-form__input" {...props} />;
 
 const Button = (props) => (
     <button className="login-form__button" onClick={props.onClick}>
@@ -96,35 +94,33 @@ class LoginForm extends React.Component {
     }
 
     setLoading() {
-        this.setState({
-            isLoading: true,
-        });
+        this.setState({ isLoading: true });
     }
 
     resetLoading() {
-        this.setState({
-            isLoading: false,
-        });
+        this.setState({ isLoading: false });
     }
 
     resetPassword() {
-        this.setState({
-            password: '',
-        });
+        this.setState({ password: '' });
     }
 
     onEmailChange = (e) => {
-        this.props.resetError();
-        this.setState({
-            email: e.target.value,
-        });
+        this.resetError();
+        this.setState({ email: e.target.value });
     };
 
     onPasswordChange = (e) => {
-        this.props.resetError();
-        this.setState({
-            password: e.target.value,
-        });
+        this.resetError();
+        this.setState({ password: e.target.value });
+    };
+
+    setError = ({ message }) => {
+        this.setState({ errorMessage: message });
+    };
+
+    resetError = () => {
+        this.setState({ errorMessage: '' });
     };
 
     onLoginClick = async (e) => {
@@ -138,7 +134,7 @@ class LoginForm extends React.Component {
             this.props.onSuccess(response);
         } catch (e) {
             this.resetPassword();
-            this.props.onError(e);
+            this.setError(e);
         } finally {
             this.resetLoading();
         }
@@ -166,7 +162,7 @@ class LoginForm extends React.Component {
                     value={this.state.password}
                     onChange={this.onPasswordChange}
                 />
-                <ErrorNotification errorMessage={this.props.errorMessage} />
+                <ErrorNotification errorMessage={this.state.errorMessage} />
                 <Button className="login-form__button" onClick={this.onLoginClick}>
                     Login
                 </Button>
@@ -198,34 +194,15 @@ class App extends React.Component {
         });
     };
 
-    onErrorLogin = (error) => {
-        this.setState({
-            errorMessage: error.message,
-        });
-    };
-
-    resetError = () => {
-        this.setState({
-            errorMessage: '',
-        });
-    };
-
     onLogout = () => {
-        this.setState({
-            user: null,
-        });
+        this.setState({ user: null });
     };
 
     render() {
         const form = this.state.user ? (
             <LogoutForm data={this.state.user} onLogout={this.onLogout} />
         ) : (
-            <LoginForm
-                errorMessage={this.state.errorMessage}
-                onSuccess={this.onSuccessLogin}
-                onError={this.onErrorLogin}
-                resetError={this.resetError}
-            />
+            <LoginForm onSuccess={this.onSuccessLogin} />
         );
 
         return <LoginPage>{form}</LoginPage>;
