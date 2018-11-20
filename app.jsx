@@ -56,13 +56,7 @@ const Input = (props) => {
     if (isFalse(opts.required)) {
         delete opts.required;
     }
-    return (
-        <input
-            className="login-form__input"
-            {...opts}
-            onChange={props.onChange}
-        />
-    );
+    return <input className="login-form__input" {...opts} onChange={props.onChange} />;
 };
 
 const Button = (props) => (
@@ -74,11 +68,7 @@ const Button = (props) => (
 const LoginPage = (props) => (
     <main className="login-page">
         <div className="login-page__logo">
-            <img
-                className="company-logo"
-                src="images/w-mercury-development.svg"
-                alt="logo"
-            />
+            <img className="company-logo" src="images/w-mercury-development.svg" alt="logo" />
         </div>
         {props.children}
     </main>
@@ -184,13 +174,10 @@ class LoginForm extends React.Component {
                     onChange={this.onPasswordChange}
                 />
                 <ErrorNotification errorMessage={this.props.errorMessage} />
-                <Button
-                    className="login-form__button"
-                    onClick={this.onLoginClick}
-                >
+                <Button className="login-form__button" onClick={this.onLoginClick}>
                     Login
                 </Button>
-                <FormLoader isLoading={this.state.isLoading}/>
+                <FormLoader isLoading={this.state.isLoading} />
             </form>
         );
     }
