@@ -1,5 +1,3 @@
-const isFalse = (value) => value === 'false';
-
 const login = async ({ email, password }) => {
     const url = 'https://us-central1-mercdev-academy.cloudfunctions.net/login';
     const requestParams = {
@@ -50,14 +48,9 @@ const login = async ({ email, password }) => {
     }
 };
 
-const Input = (props) => {
-    const opts = { ...props };
-    delete opts.onChange;
-    if (isFalse(opts.required)) {
-        delete opts.required;
-    }
-    return <input className="login-form__input" {...opts} onChange={props.onChange} />;
-};
+const Input = (props) => (
+    <input className="login-form__input" {...props}/>
+);
 
 const Button = (props) => (
     <button className="login-form__button" onClick={props.onClick}>
