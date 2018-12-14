@@ -43,13 +43,13 @@ html {
 
 @font-face {
   font-family: Gotham;
-  src: url('fonts/GothamMedium.otf'), url('fonts/GothamMedium.ttf') format("truetype"), url('fonts/GothamMedium.woff2') format("woff2");
+  src: url('/src/assets/fonts/GothamMedium.otf'), url('/src/assets/fonts/GothamMedium.ttf') format("truetype"), url('/src/assets/fonts/GothamMedium.woff2') format("woff2");
   font-weight: 500;
   font-display: swap; }
 
 @font-face {
   font-family: Gotham;
-  src: url('fonts/GothamBold.ttf');
+  src: url('/src/assets/fonts/GothamBold.ttf');
   font-weight: 700;
   font-display: swap; }
 
@@ -137,7 +137,7 @@ html {
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: url('images/progressive-bg.jpg') no-repeat center center, linear-gradient(138deg, #ff435c 0%, #ce2c7f 100%);
+  background: url('/src/assets/images/progressive-bg.jpg') no-repeat center center, linear-gradient(138deg, #ff435c 0%, #ce2c7f 100%);
   background-size: cover; }
   @media (max-width: 576px) {
     .login-page {
