@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "babel": "npx babel src/app.jsx --plugins @babel/plugin-proposal-class-properties --plugins@babel/plugin-transform-react-jsx --out-file src/app.js --watch"
+    "babel": "npx babel src --plugins @babel/plugin-proposal-class-properties --plugins@babel/plugin-transform-react-jsx --out-dir dist --watch"
   },
   "repository": {
     "type": "git",

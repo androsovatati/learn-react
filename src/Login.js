@@ -1,4 +1,4 @@
-export default async ({ email, password }) => {
+const Login = async ({ email, password }) => {
   const url = 'https://us-central1-mercdev-academy.cloudfunctions.net/login';
   const requestParams = {
     method: 'POST',
@@ -47,3 +47,5 @@ export default async ({ email, password }) => {
     });
   }
 };
+
+export default Login;
