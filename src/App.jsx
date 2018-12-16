@@ -1,3 +1,4 @@
+import { UserContext } from './UserContext.js';
 import LoginPage from './LoginPage.js';
 import LoginForm from './LoginForm.js';
 import LogoutForm from './LogoutForm.js';
@@ -5,27 +6,35 @@ import LogoutForm from './LogoutForm.js';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { user: null };
+        this.state = {
+            user: null,
+            setUser: this.setUser,
+            resetUser: this.resetUser,
+        };
     }
 
-    onSuccessLogin = (data) => {
+    setUser = (data) => {
         this.setState({
             user: { ...data },
         });
     };
 
-    onLogout = () => {
+    resetUser = () => {
         this.setState({ user: null });
     };
 
     render() {
         const form = this.state.user ? (
-            <LogoutForm data={this.state.user} onLogout={this.onLogout} />
+            <LogoutForm />
         ) : (
-            <LoginForm onSuccess={this.onSuccessLogin} />
+            <LoginForm />
         );
 
-        return <LoginPage>{form}</LoginPage>;
+        return (
+            <UserContext.Provider value={this.state}>
+                <LoginPage>{form}</LoginPage>
+            </UserContext.Provider>
+        );
     }
 }
 
