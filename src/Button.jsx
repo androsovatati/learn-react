@@ -1,6 +1,6 @@
-const Button = (props) => (
+const Button = props => (
   <button className="login-form__button" onClick={props.onClick}>
-      {props.children}
+    {props.children}
   </button>
 );
 

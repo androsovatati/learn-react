@@ -1,14 +1,14 @@
 const Login = async ({ email, password }) => {
-  const url = 'https://us-central1-mercdev-academy.cloudfunctions.net/login';
+  const url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
   const requestParams = {
-    method: 'POST',
-    headers: { 'Content-type': 'application/json' },
+    method: "POST",
+    headers: { "Content-type": "application/json" },
     body: JSON.stringify({ email, password }),
   };
 
-  const response = await fetch(url, requestParams).catch((error) =>
+  const response = await fetch(url, requestParams).catch(error =>
     Promise.reject({
-      message: 'Network error',
+      message: "Network error",
       body: error,
     })
   );
@@ -27,21 +27,21 @@ const Login = async ({ email, password }) => {
       });
     }
 
-    let errorMessage = '';
+    let errorMessage = "";
     if (response.status >= 500) {
-      errorMessage = 'Server error. Try again';
+      errorMessage = "Server error. Try again";
     } else if (response.status >= 400 && response.status < 500) {
-      errorMessage = 'Application error';
+      errorMessage = "Application error";
     }
 
     return Promise.reject({
-      message: errorMessage || 'Unhandled error',
+      message: errorMessage || "Unhandled error",
       status: response.status,
       body: parsedData,
     });
   } catch (error) {
     return Promise.reject({
-      message: 'Invalid server data',
+      message: "Invalid server data",
       status: response.status,
       body: error,
     });
