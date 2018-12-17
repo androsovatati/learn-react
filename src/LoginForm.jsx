@@ -1,10 +1,11 @@
-import { UserContext } from './UserContext.js';
+import withUserContext from './withUserContext.js';
 import Input from './Input.js';
 import Button from './Button.js';
 import ErrorNotification from './ErrorNotification.js';
 import FormLoader from './FormLoader.js';
 import Login from './Login.js';
 
+@withUserContext
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +46,7 @@ class LoginForm extends React.Component {
         this.setState({ errorMessage: '' });
     };
 
-    onLoginClick = async ({ e, setUser }) => {
+    onFormSubmit = async (e) => {
         if (!this.state.email || !this.state.password) {
             return;
         }
@@ -53,7 +54,7 @@ class LoginForm extends React.Component {
         try {
             this.setLoading();
             const response = await Login(this.state);
-            setUser(response);
+            this.props.context.setUser(response);
         } catch (e) {
             this.resetPassword();
             this.resetLoading();
@@ -63,36 +64,32 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <UserContext.Consumer>
-                {({ setUser }) => (
-                    <form className="login-page__form login-form">
-                        <div className="login-form__title">Log in</div>
-                        <Input
-                            className="login-form__input"
-                            name="email"
-                            type="email"
-                            placeholder="E-Mail"
-                            required={true}
-                            value={this.state.email}
-                            onChange={this.onEmailChange}
-                        />
-                        <Input
-                            className="login-form__input"
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            required={true}
-                            value={this.state.password}
-                            onChange={this.onPasswordChange}
-                        />
-                        <ErrorNotification errorMessage={this.state.errorMessage} />
-                        <Button className="login-form__button" onClick={(e) => this.onLoginClick({ e, setUser })}>
-                            Login
-                        </Button>
-                        <FormLoader isLoading={this.state.isLoading} />
-                    </form>
-                )}
-            </UserContext.Consumer>
+            <form className="login-page__form login-form" onSubmit={this.onFormSubmit}>
+                <div className="login-form__title">Log in</div>
+                <Input
+                    className="login-form__input"
+                    name="email"
+                    type="email"
+                    placeholder="E-Mail"
+                    required={true}
+                    value={this.state.email}
+                    onChange={this.onEmailChange}
+                />
+                <Input
+                    className="login-form__input"
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    required={true}
+                    value={this.state.password}
+                    onChange={this.onPasswordChange}
+                />
+                <ErrorNotification errorMessage={this.state.errorMessage} />
+                <Button className="login-form__button">
+                    Login
+                </Button>
+                <FormLoader isLoading={this.state.isLoading} />
+            </form>
         );
     }
 }
